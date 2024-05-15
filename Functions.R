@@ -152,15 +152,19 @@ plot_data <- function(metric = "population") {
       #plot.title = element_text(hjust = 0.5, face = "bold", size = 20),
       legend.position = "bottom",
       legend.text = element_text(size = 8), 
-      legend.title = element_text(size = 9) 
+      legend.title = element_text(size = 9)
       
     )
   
   return(gg)
 }
 
+
 rentmap <- plot_data(metric = "rent")
 popmap <- plot_data(metric = "population")
+
+rentmap <- rentmap + theme(plot.background = element_rect(fill = "transparent", colour = NA))
+popmap <- popmap + theme(plot.background = element_rect(fill = "transparent", colour = NA))
 
 
 
@@ -202,6 +206,8 @@ pop_growth <- ggplot(population_growth, aes(x = as.factor(Year))) +
        y = "Population in Thousands",
        caption = "\nNote(s) Natural Increase is the result of (birth - death) population\nSource(s): Statistic Canada: Population estimates, quarterly; Estimates of the components of international migration, quarterly")
 
+pop_growth <- pop_growth + theme(plot.background = element_rect(fill = "transparent", colour = NA))
+
 
 
 ### Rent
@@ -215,7 +221,7 @@ rental_plot <- ggplot(rents_data, aes(x = Year, y = Average_Rent)) +
   theme(plot.caption = element_text(hjust = 0, size = 8, color = "black")) + 
   scale_y_continuous(labels = scales::comma_format(scale = 1))
 
-
+rental_plot <- rental_plot + theme(plot.background = element_rect(fill = "transparent", colour = NA))
 
 ### Turnover
 # Plot for Vancouver
@@ -280,7 +286,7 @@ Model1_plot <- plot_predictions(out, condition = c("Population_Growth"), vcov=FA
                    Canada Mortgage and Housing Corporation: average rents")
 
 
-  
+Model1_plot <- Model1_plot + theme(plot.background = element_rect(fill = "transparent", colour = NA))  
 
 
 ### Model (James)
@@ -302,8 +308,7 @@ create_city_plot <- function(city) {
                alpha = 1, inherit.aes = FALSE) +
     geom_line(aes(color = "black")) +
     scale_y_continuous(breaks = seq(0, 2000, by = 500), limits = c(500, 2000)) +
-    labs(#title = "Predicted Renting Price Based on Growth of Immigrants in Major CMAs",
-         x = "Inflow of Immigrants in Percentage",
+    labs(x = "Inflow of Immigrants in Percentage",
          y = "Average Renting Price in Dollars",
          caption = caption,
          color = "City")
@@ -312,15 +317,15 @@ create_city_plot <- function(city) {
     plot <- plot + scale_color_manual(values = city_colors) +
       guides(color = guide_legend(title = "City"))
   } else {
-    # Ensure the color is directly applied to the city's specific color
     plot <- plot + scale_color_manual(values = setNames(city_colors[city], city)) +
       guides(color = guide_legend(title = "City"))
   }
   
-  # General theme applicable to all cases
+  # Apply the theme with transparent plot background
   plot <- plot + 
     theme_minimal() +
-    theme(text = element_text(size = 12),
+    theme(plot.background = element_rect(fill = "transparent", colour = NA),  # Making the plot background transparent
+          text = element_text(size = 12),
           plot.title = element_text(hjust = 0.5, face = "bold", size = 20),
           plot.caption = element_text(hjust = 0, margin = margin(b = 5, t = 5)),
           plot.margin = margin(t = 10, r = 10, b = 10, l = 10),
@@ -332,11 +337,8 @@ create_city_plot <- function(city) {
           legend.title = element_text(size = 12),
           legend.text = element_text(size = 12))
   
-
-  
   return(plot)
 }
-
 
 
 print("Functions loading is completed")
