@@ -76,6 +76,23 @@ ui <- navbarPage(
      p {
      font-size: 10px !important;
      }
+     .row {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+     }
+      .col-sm-4 {
+      max-width: 66.666%;
+      min-width: 66.666%;
+      margin: 0px;
+      padding: 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-item: center;
+      }
      }
     /* Navigation Bar */
     .navbar {
@@ -414,7 +431,7 @@ ui <- navbarPage(
                fluidRow(
                  column(8, plotOutput("displayModel1_plot")),
                  column(4, style='text-align: justify;',
-                        p(HTML((paste0("There is a <b><span style='color: #FFC225;'> positive correlation </span></b>
+                        p(HTML((paste0("There is a <span style='color: #FFC225;'> positive correlation </span>
                         between average rental prices and population growth in Vancouver <br> 
                         <b><br>Dependent Variable:<br></b>Average Rent (2024 CAD)<br><br><b>Independent Variable:<br></b>
                   - Population Growth and Inflow of Immigrants as a percentage of total population
@@ -434,7 +451,7 @@ ui <- navbarPage(
                fluidRow(
                  column(8, plotOutput("cityPlot")),  
                  column(4,  
-                        p(HTML(paste0("Overall, there is a <b><span style='color: #FFC225;'>positive relationship</span></b>
+                        p(HTML(paste0("Overall, there is a <span style='color: #FFC225;'>positive relationship</span>
                         between changes in average rent and immigrant inflow indicating that higher 
                           immigrant inflows have an impact on average rental prices."))),
                         selectInput("city",
